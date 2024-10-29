@@ -220,7 +220,7 @@ router.get('/getComment/:postId',async function(req,res){
         .populate({
             path: 'comments',
             populate: {
-                path: 'userId', // assuming your comment schema has a field named 'userId'
+                path: 'userId', 
                 select: 'name email profileImage' // adjust this to select the fields you need
             }
         });
