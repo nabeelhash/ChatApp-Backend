@@ -27,15 +27,19 @@ router.post('/sender/:id',authenticate,upload.single('pic'),async function(req,r
         if(req.userId === req.params.id){
             return res.status(400).json('sender and receiver cannot be same')
         }
-        const dataUriParser = dataUri(req.file) 
-        const response = await cloudinary.uploader.upload(dataUriParser, {
-            folder: "chat"
-        });
+        let imageUrl = null;
+        if (req.file) {
+            const dataUriParser = dataUri(req.file); 
+            const response = await cloudinary.uploader.upload(dataUriParser, {
+                folder: "chat"
+            });
+            imageUrl = response.secure_url;
+        }
         const message = await Message.create({
             senderId: req.userId,
             receiverId: req.params.id,
             message: req.body.mode === 'text' ? req.body.message : null,
-            imageUrl: req.body.mode === 'image' ? response.secure_url : null,
+            imageUrl: req.body.mode === 'image' ? imageUrl : null,
             mode: req.body.mode
         })
 
