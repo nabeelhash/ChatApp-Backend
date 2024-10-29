@@ -8,7 +8,8 @@ const io = new Server(server,{
     cors:{
         origin: 'https://nabeelhash-chatapp.vercel.app',
         credentials: true
-    }
+    },
+    transports: ['websocket', 'polling'] // Add this if necessary
 })
 
 //real time message online 
