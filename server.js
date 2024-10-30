@@ -10,7 +10,8 @@ const auth = require('./routes/auth')
 const user = require('./routes/userRoutes')
 const post = require('./routes/postRoute')
 const Conversation = require('./routes/messageRoutes')
-const {app,server,io} = require('./socket/index')
+// const {app,server,io} = require('./socket/index')
+const app = express()
 
 app.use(express.json())
 app.use(cors({
