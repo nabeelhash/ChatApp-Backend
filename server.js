@@ -28,7 +28,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 mongoose.connect(process.env.MONGODB_URI).then(function(){
     console.log(process.env.PORT)
-    server.listen(4000, () => {
+    app.listen(4000, () => {
         console.log('Server started');
     });
 
