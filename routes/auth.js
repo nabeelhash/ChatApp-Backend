@@ -4,7 +4,7 @@ const User = require('../models/userModel')
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const secretKey = '123456'
+// const secretKey = '123456'
 const { body, validationResult } = require('express-validator');
 const authentication = require('../middleware/authenticate')
 const { adminRole, userRole } = require('../middleware/Role')
@@ -71,7 +71,7 @@ router.post('/login', loginValidate, async function (req, res) {
         if (!comparePassword) {
             return res.status(400).json('Password is Incorrect')
         }
-        const token = jwt.sign({ id: checkUser._id }, secretKey, { expiresIn: '5h' })
+        const token = jwt.sign({ id: checkUser._id }, process.env.KEY, { expiresIn: '5h' })
         res.cookie('token', token)
         res.status(200).json({ message: "Login successful", checkUser, token })
     }
@@ -171,7 +171,7 @@ router.get('/', function (req, res) {
         if (!token) {
             return res.status(400).json('No cookies Found')
         }
-        const decoded = jwt.verify(token, secretKey);
+        const decoded = jwt.verify(token, process.env.KEY);
         if (!decoded) {
             return res.status(400).json('Token is invalid')
         }
